@@ -1,18 +1,20 @@
 import styled from 'styled-components'
+import DropOut from './DropOut'
 
 export default function Table({ index }) {
-  const t =
+  const table =
     index !== 5 ? (
       <Row>
         <span>0{Number(index) + 1}</span>
       </Row>
     ) : (
-      <Row2>
+      <OrangeRow>
         <span>0{Number(index) + 1}</span>
-      </Row2>
+        <DropOut />
+      </OrangeRow>
     )
 
-  return t
+  return table
 }
 
 const Row = styled.div`
@@ -21,14 +23,12 @@ const Row = styled.div`
   height: 40px;
   align-items: center;
   padding-left: 20px;
-  width: 100%;
+  min-width: 550px;
 `
 
-const Row2 = styled.div`
-  display: flex;
-  border-bottom: solid #ff9700 3px;
-  height: 40px;
-  align-items: center;
-  padding-left: 20px;
+const OrangeRow = styled(Row)`
+  position: relative;
+  border-bottom: solid 3px var(--orange);
   width: 100%;
+  min-width: 550px;
 `

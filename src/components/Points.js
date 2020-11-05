@@ -30,7 +30,7 @@ const Wrapper = styled.div`
   justify-items: right;
 `
 const Added = styled.div`
-  color: #ff9700;
+  color: var(--orange);
   font-size: 80%;
   width: 100%;
   margin-right: 10px;
@@ -38,7 +38,7 @@ const Added = styled.div`
   align-items: center;
 `
 const Slash = styled.div`
-  color: #ff9700;
+  color: var(--orange);
 `
 
 const PointWrapper = styled.div`

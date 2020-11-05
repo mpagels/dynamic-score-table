@@ -13,7 +13,12 @@ body {
 
 }
 
-:root {
+#root {
+  display: flex;
+  justify-content: center;
+}
 
+:root {
+    --orange: #ff9700;
     }
 `

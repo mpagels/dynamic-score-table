@@ -2,19 +2,34 @@ import styled from 'styled-components'
 
 export default function Input({ movie, handleInput, index }) {
   return (
-    <Points>
-      {movie.name}
-      <form onSubmit={(e) => handleInput(e, index)}>
-        <input id="points"></input>
-        <button>Speichern</button>
-      </form>
-    </Points>
+    <>
+      <Form onSubmit={(e) => handleInput(e, index)}>
+        <label id="points" name={movie.name}>
+          {movie.name}
+        </label>
+        <InputField id="points" type="number" name={movie.name}></InputField>
+        <button>Hinzufügen</button>
+      </Form>
+    </>
   )
 }
 
-const Points = styled.div`
+const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 10px;
+  justify-content: center;
+  margin: 20px;
+`
+
+const InputField = styled.input`
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &[type='number'] {
+    -moz-appearance: textfield;
+  }
 `
