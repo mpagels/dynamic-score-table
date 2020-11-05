@@ -1,26 +1,54 @@
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
+import { animated } from 'react-spring'
 
-export default function Points({ points }) {
+export default function Points({ points, isAdded, added, opacity }) {
   return (
     <Wrapper>
-      <Slash>/</Slash>
-      <div>
-        {points} <XP>XP</XP>
-      </div>
+      <Added>
+        {isAdded &&
+          opacity.map(
+            ({ item, key, props }) =>
+              item && (
+                <animated.div key={key} style={{ ...props, display: 'inline' }}>
+                  +{added}
+                </animated.div>
+              )
+          )}
+      </Added>
+      <PointWrapper>
+        <Slash>/</Slash>
+        <span>{points}</span> <XP>XP</XP>
+      </PointWrapper>
     </Wrapper>
   )
 }
 
-const Wrapper = styled.span`
-  width: 75px;
+const Wrapper = styled.div`
+  width: 175px;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  justify-items: right;
 `
-const Slash = styled.span`
+const Added = styled.div`
+  color: #ff9700;
+  font-size: 80%;
+  width: 100%;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+`
+const Slash = styled.div`
   color: #ff9700;
 `
 
-const XP = styled.span`
+const PointWrapper = styled.div`
+  display: flex;
+  width: 100px;
+  justify-content: space-between;
+  align-items: flex-end;
+`
+
+const XP = styled.div`
   font-size: 60%;
+  margin-left: 3px;
 `

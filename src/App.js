@@ -3,32 +3,48 @@ import { useTransition, animated } from 'react-spring'
 import Input from './components/Input'
 import Row from './components/Table'
 import Points from './components/Points'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 let data = [
   {
     name: 'Soul Kitchen',
     points: 0,
+    added: 0,
   },
   {
     name: 'Matrix',
     points: 0,
+    added: 0,
   },
   {
     name: 'Tenet',
     points: 0,
+    added: 0,
   },
   {
     name: 'Brüno',
     points: 0,
+    added: 0,
   },
   {
     name: 'The Dark Knight',
     points: 0,
+    added: 0,
   },
   {
     name: 'Inception',
     points: 0,
+    added: 0,
+  },
+  {
+    name: 'Star Wars',
+    points: 0,
+    added: 0,
+  },
+  {
+    name: 'Indiana Jones',
+    points: 0,
+    added: 0,
   },
 ]
 
@@ -46,6 +62,13 @@ function App() {
       update: ({ y }) => ({ y }),
     }
   )
+
+  const [show, setShow] = useState(false)
+  const opacity = useTransition(show, null, {
+    from: { position: 'absolute', opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+  })
 
   useEffect(() => {
     const toSortedRows = [...rows]
@@ -65,20 +88,20 @@ function App() {
               key={key}
               class="card"
               style={{
-                width: '100%',
                 transform: y.interpolate((y) => `translate3d(0,${y}px,0)`),
                 ...rest,
+                width: '85%',
               }}
             >
-              <div class="cell">
-                <div class="details">
-                  <Test>
-                    {item.name}
-
-                    <Points points={item.points} />
-                  </Test>
-                </div>
-              </div>
+              <Details>
+                {item.name}
+                <Points
+                  points={item.points}
+                  added={item.added}
+                  isAdded={item.added > 0}
+                  opacity={opacity}
+                />
+              </Details>
             </animated.div>
           ))}
         </TableContent>
@@ -93,9 +116,23 @@ function App() {
 
   function handleInput(e, i) {
     e.preventDefault()
-    const newRows = [...rows]
-    newRows[i].points += Number(e.target[0].value)
+    const newRows = rows.map((row, index) => {
+      return i === index ? test(row, e) : test2(row)
+    })
     set([...newRows])
+    setShow(true)
+    setTimeout(() => setShow(false), 2500)
+  }
+
+  function test(row, e) {
+    row.points += Number(e.target[0].value)
+    row.added = Number(e.target[0].value)
+    return row
+  }
+
+  function test2(row, e) {
+    row.added = 0
+    return row
   }
 }
 export default App
@@ -103,17 +140,27 @@ export default App
 const Table = styled.div`
   position: relative;
   width: 50%;
+  & div:nth-child(1) > span:nth-child(1) {
+    color: #ff9700;
+  }
+
+  & div:nth-child(n + 7) > span {
+    color: grey;
+  }
 `
 const TableContent = styled.div`
-  display: flex;
   position: absolute;
   top: 7px;
   left: 70px;
-  width: 85%;
+  width: 100%;
 `
 
-const Test = styled.span`
-  width: 100%;
+const Test = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
+const Details = styled.div`
   display: flex;
   justify-content: space-between;
 `
